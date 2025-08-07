@@ -1,0 +1,79 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.office'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+// 기본 탑재 된 로그백 제거
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+	//spring-boot-starter-jdbc 검색
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+	// mysql-connector-j 검색 -> MySQL Connector/J 선택 -> runtime
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	//spring-boot-starter-security 검색 -> Spring Boot Starter Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	// spring-boot-starter-mail 검색 ->  Spring Boot Starter Mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
+	// spring-boot-starter-log4j2 검색 -> Spring Boot Starter Log4j2
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2:3.5.3'
+
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	// lombook 검색 -> Project Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+	// mybatis 검색 -> MyBatis Spring Boot Starter
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
