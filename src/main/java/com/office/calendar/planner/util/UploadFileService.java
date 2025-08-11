@@ -15,7 +15,7 @@ public class UploadFileService {
     @Value("${calendar.image.upload.dir}")
     private String imageUploadDir;
 
-    @Value("calendar.image.upload.dir.separator")
+    @Value("${calendar.image.upload.dir.separator}")
     private String imageUploadDirSeperator;
 
     public String upload(String id, MultipartFile file) {
