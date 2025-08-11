@@ -17,17 +17,16 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        // window
+        // for Windows
         /*
         registry.addResourceHandler("/planUploadImg/**")
                 .addResourceLocations("file:///c://calendar/upload/");
-        */
+         */
 
-        // ubuntu
+        // for Ubuntu
         /*
         registry.addResourceHandler("/planUploadImg/**")
                 .addResourceLocations("file:///calendar/upload/");
-
          */
 
         registry.addResourceHandler("/planUploadImg/**")

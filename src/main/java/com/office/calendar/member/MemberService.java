@@ -70,10 +70,10 @@ public class MemberService {
              */
 
             /*
-//            MemberEntity memberEntity = MemberEntity.builder()
-//                    .memId(memberDto.getId())
-//                    .memPw(encodedPW)
-//                    .memMail(memberDto.getMail())
+            MemberEntity memberEntity = MemberEntity.builder()
+                    .memId(memberDto.getId())
+                    .memPw(encodedPW)
+                    .memMail(memberDto.getMail())
                     .memPhone(memberDto.getPhone())
                     .build();
             */

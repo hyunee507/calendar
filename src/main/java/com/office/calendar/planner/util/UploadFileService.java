@@ -25,11 +25,13 @@ public class UploadFileService {
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
 
-        // window
-        //String uploadDir = "c:\\calendar\\upload\\" + id;
+        /*
+        // for Windows
+        // String uploadDir = "c:\\calendar\\upload\\" + id;
 
-        // ubuntu
-        //String uploadDir = "/calendar/upload/" + id;
+        // for Ubuntu
+        String uploadDir = "/calendar/upload/" + id;
+        */
 
         String uploadDir = imageUploadDir + id;
 
@@ -38,17 +40,16 @@ public class UploadFileService {
         String uniqueFileName = uuid.toString().replaceAll("-", "");
 
         /*
-        // window
-        //File saveFile = new File(uploadDir + "\\" + uniqueFileName + fileExtension);
+        // for Windows
+        // File saveFile = new File(uploadDir + "\\" + uniqueFileName + fileExtension);
 
-        // ubuntu
+        // for Ubuntu
         File saveFile = new File(uploadDir + "/" + uniqueFileName + fileExtension);
         */
 
         File saveFile = new File(uploadDir + imageUploadDirSeperator + uniqueFileName + fileExtension);
 
         if (!saveFile.exists())
-
             saveFile.mkdirs();
 
         try {

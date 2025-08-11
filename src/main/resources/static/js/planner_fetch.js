@@ -55,7 +55,6 @@ async function fetchWritePlan(year, month, date, title, body, file) {
 
 }
 
-// 일정들 출력
 async function fetchGetCurrentMonthPlans() {
     console.log('fetchGetCurrentMonthPlans()');
 
@@ -110,7 +109,7 @@ async function fetchGetPlan(no) {
     });
 
     try{
-        let response = await fetch(
+        let response =  await fetch(
             `/planner/plan?${reqData.toString()}`,
             {
                 method: 'GET',
@@ -121,26 +120,26 @@ async function fetchGetPlan(no) {
         );
 
         if(!response.ok) {
-            throw new Error('COMMUNICATION ERROR!');
+            throw new Error('COMMUNICATION ERROR');
         }
 
         let data = await response.json();
-        console.log('data ----> ', data);
-
+        
         showDetailPlanView(data.plan);
 
 
     } catch(e) {
         console.log('COMMUNICATION ERROR!!', e);
+
     }
+    
 }
 
 async function fetchRemovePlan(no) {
     console.log('fetchRemovePlan()');
 
-
     try{
-        let response = await fetch(
+        let response =  await fetch(
             `/planner/plan/${no}`,
             {
                 method: 'DELETE',
@@ -151,13 +150,11 @@ async function fetchRemovePlan(no) {
         );
 
         if(!response.ok) {
-            throw new Error('COMMUNICATION ERROR!');
+            throw new Error('COMMUNICATION ERROR');
         }
 
         let data = await response.json();
-        console.log('data-------->', data);
-
-        if(data.result > 0) {
+        if (data.result > 0) {
             alert('일정이 정상적으로 삭제 되었습니다.');
             
             removeCalenderTr();
@@ -172,12 +169,11 @@ async function fetchRemovePlan(no) {
 
     } catch(e) {
         console.log('COMMUNICATION ERROR!!', e);
-    } finally {
 
+    } finally {
         hideDetailPlanView();
 
     }
-
 
 }
 
@@ -190,48 +186,44 @@ async function fetchModifyPlan(no, year, month, date, title, body, file) {
     formData.append("date", date);
     formData.append("title", title);
     formData.append("body", body);
-    
-    if(file != undefined) {
-        formData.append("file", file);
-        
+
+    if (file != undefined) {
+        formData.append('file', file);
     }
 
     try {
-
         let response = await fetch(
-            `/planner/plan/${no}`,
+            `/planner/plan/${no}`, 
             {
-                method: 'PUT',
+                method: 'PUT', 
                 body: formData,
-
             }
         );
 
-        if(!response.ok) {
-            throw new Error('COMMUNICATION ERROR!');
+        if (!response.ok) {
+            throw new Error('NETWORK ERROR!!');
         }
 
         let data = await response.json();
-        console.log('data---------->', data);
-        if(data.result <= 0) {
+        if (data.result <= 0) {
             alert('일정 수정에 문제가 발생했습니다.');
+
         } else {
-            alert('일정이 정상적으로 수정되었습니다.');
+            alert('일정이 정상적으로 수정 됐습니다.');
+
             removeCalenderTr();
             addCalenderTr();
             fetchGetCurrentMonthPlans();
 
         }
 
-
-    } catch(e) {
-        console.log('COMMUNICATION ERROR!!', e);
+    } catch (e) {
+        console.log('COMMUNITICATION ERROR!!');
         alert('일정 수정에 문제가 발생했습니다.');
 
     } finally {
         hideDetailPlanView();
 
     }
-
-}
     
+}

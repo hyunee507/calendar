@@ -92,17 +92,18 @@ public class PlannerController {
 
         Map<String, Object> resultMap = plannerService.getPlan(reqData);
 
-        return ResponseEntity.ok(resultMap);
+        return  ResponseEntity.ok(resultMap);
+
     }
 
     @DeleteMapping("/plan/{no}")
     public ResponseEntity<Map<String, Object>> removePlan(@PathVariable("no") int no) {
         log.info("removePlan()");
 
-        Map<String, Object> resultMap =  plannerService.removerPlan(no);
+        Map<String, Object> resultMap = plannerService.removePlan(no);
 
+        return ResponseEntity.ok(resultMap);
 
-        return  ResponseEntity.ok(resultMap);
     }
 
     @PutMapping("/plan/{no}")
@@ -115,32 +116,26 @@ public class PlannerController {
         log.info("modifyPlan()");
 
         plannerDto.setNo(no);
-        if(file != null) {
-
+        if (file != null) {
             String savedFileName = uploadFileService.upload(principal.getName(), file);
-
-            if(savedFileName != null) {
-
+            if (savedFileName != null) {
                 plannerDto.setOwner_id(principal.getName());
                 plannerDto.setImg_name(savedFileName);
 
                 return ResponseEntity.ok(plannerService.modifyPlan(plannerDto));
 
             } else {
-
-                Map<String, Object> erroerMap = new HashMap<>();
-                erroerMap.put("messgae", "File upload FAILED!!");
-                return  ResponseEntity.badRequest().body(erroerMap);
+                Map<String, Object> errorMap = new HashMap<>();
+                errorMap.put("message", "File upload FAILED!!");
+                return  ResponseEntity.badRequest().body(errorMap);
 
             }
 
         } else {
-
             return ResponseEntity.ok(plannerService.modifyPlan(plannerDto));
 
         }
 
     }
-
 
 }

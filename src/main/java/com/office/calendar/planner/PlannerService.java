@@ -16,13 +16,26 @@ import java.util.stream.Collectors;
 @Service
 public class PlannerService {
 
-    public static final int PLAN_MODIFY_SUCCESS = 1;
-    public static final int PLAN_MODIFY_FAIL = 0;
+    public static final int PLAN_MODIFY_SUCCESS     = 1;
+    public static final int PLAN_MODIFY_FAIL        = 0;
 
     private final PlannerRepository plannerRepository;
 
     public PlannerService(PlannerRepository plannerRepository) {
         this.plannerRepository = plannerRepository;
+    }
+
+    @Transactional
+    public Map<String, Object> removePlan(int no) {
+        log.info("removePlan()");
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        int result = plannerRepository.deleteByPlanNo(no);
+        resultMap.put("result", result);
+
+        return resultMap;
+
     }
 
     public Map<String, Object> writePlan(PlannerDto plannerDto) {
@@ -74,21 +87,13 @@ public class PlannerService {
 
         Map<String, Object> resultMap = new HashMap<>();
 
-        resultMap.put("plan", plannerRepository.findByPlanNo(Util.castObjectToInteger(reqData.get("no"))).toDto());
+        resultMap.put(
+                "plan",
+                plannerRepository.findByPlanNo(Util.castObjectToInteger(reqData.get("no"))).toDto()
+                );
 
         return resultMap;
-    }
 
-    @Transactional
-    public Map<String, Object> removerPlan(int no) {
-        log.info("removePlan()");
-
-        Map<String, Object> resultMap = new HashMap<>();
-
-        int result = plannerRepository.deleteByPlanNo(no);
-        resultMap.put("result", result);
-
-        return resultMap;
     }
 
     @Transactional
@@ -98,25 +103,25 @@ public class PlannerService {
         Map<String, Object> resultMap = new HashMap<>();
 
         int result = PLAN_MODIFY_FAIL;
-
         PlannerEntity plannerEntity = plannerRepository.findByPlanNo(plannerDto.getNo());
-        if(plannerEntity != null) {
+        if (plannerEntity != null) {
             plannerEntity.setPlanYear(plannerDto.getYear());
             plannerEntity.setPlanMonth(plannerDto.getMonth());
             plannerEntity.setPlanDate(plannerDto.getDate());
             plannerEntity.setPlanTitle(plannerDto.getTitle());
             plannerEntity.setPlanBody(plannerDto.getBody());
 
-            if(plannerDto.getImg_name() != null) {
+            if (plannerDto.getImg_name() != null) {
                 plannerEntity.setPlanImgName(plannerDto.getImg_name());
-
             }
 
             result = PLAN_MODIFY_SUCCESS;
+
         }
 
         resultMap.put("result", result);
 
         return resultMap;
+
     }
 }

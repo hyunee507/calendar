@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-// 현재 날짜 세팅
 function setCurrentCalender(year, month, date, day) {
     console.log('setCurrentCalender()');
 
@@ -42,7 +41,6 @@ function setCurrentCalender(year, month, date, day) {
 
 }
 
-// 현재 <select> UI 렌더링
 function setCurrentYearAndMonthSelectUI() {
     console.log('setCurrentYearAndMonthSelectUI()');
 
@@ -51,7 +49,6 @@ function setCurrentYearAndMonthSelectUI() {
 
 }
 
-// 현재 <tr> UI 렌더링
 function addCalenderTr() {
     console.log('addCalenderTr()');
 
@@ -170,7 +167,7 @@ function initEvents() {
 
             showWritePlanView(year, month, date);
 
-        }
+         }
 
         // 일정 등록 모달 닫기
         if (event.target.matches('#section_wrap input[value="CANCEL"]')) {
@@ -211,37 +208,35 @@ function initEvents() {
 
             }
 
-            
         }
-        
+
         // 일정 디테일 모달 보기(달력에서 타이틀 클릭 시)
-        if(event.target.matches('#table_calender a.title')) {
-            console.log('PLAN TITLE CLICKED!!', event.target.getAttribute('data-no'));
+        if (event.target.matches('#table_calender a.title')) {
+            console.log('PLAN TITLE CLICKED!!');
 
             fetchGetPlan(event.target.getAttribute('data-no'));
+
         }
 
         // 일정 디테일 모달 가리기
-        if(event.target.matches('#show_plan input[value="CLOSE"]')) {
-            console.log('DETAIL MODAL CLOSE BUTTON!!');
-
+        if (event.target.matches('#show_plan input[value="CLOSE"]')) {
+            console.log('DETAIL MODAL CLOSE BUTTON CLICKED!!');
             hideDetailPlanView();
 
         }
 
-        // 일정 디테일 모달에서 DELETE 버튼 클릭 했을 때
-        if(event.target.matches('#show_plan input[value="DELETE"]')) {
-            console.log('DEATIL MODAL DELETE BUTTON CLICK!!');
+        // 일정 디테일 모달에서 DELETE 버튼 클릭 시
+        if (event.target.matches('#show_plan input[value="DELETE"]')) {
+            console.log('DETAIL MODAL DELETE BUTTON CLICKED!!');
 
             let no = event.target.getAttribute('data-no');
-
             fetchRemovePlan(no);
 
         }
 
-        // 일정 디테일 모달에서 MODIFY 버튼 클릭시
-        if(event.target.matches('#show_plan input[value="MODIFY"]')) {
-            console.log('DEATIL MODAL MODIFY BUTTON CLICK!!');
+        // 일정 디테일 모달에서 MODIFY 버튼 클릭 시
+        if (event.target.matches('#show_plan input[value="MODIFY"]')) {
+            console.log('DETAIL MODAL MODIFY BUTTON CLICKED!!');
 
             let year = document.querySelector('#show_plan select[name="dp_year"]').value;
             let month = document.querySelector('#show_plan select[name="dp_month"]').value;
@@ -254,10 +249,7 @@ function initEvents() {
 
             fetchModifyPlan(no, year, month, date, title, body, file);
 
-
-
         }
-
 
     });
 
@@ -435,21 +427,21 @@ function showDetailPlanView(plan) {
 
     // 데이터 설정
     const showPlan = document.querySelector('#show_plan');
+
     showPlan.querySelector('select[name="dp_year"]').value = plan.year;
     showPlan.querySelector('select[name="dp_month"]').value = plan.month;
-    
+
     setSelectDateOptions(plan.year, plan.month, "dp_date");
     showPlan.querySelector('select[name="dp_date"]').value = plan.date;
 
     showPlan.querySelector('input[name="p_title"]').value = plan.title;
     showPlan.querySelector('input[name="p_body"]').value = plan.body;
 
-    // 이미지 데이터 설정(plan.img_name) /planUploadImg
+    // 이미지 데이터 설정 (plan.img_name)  /planUploadImg
     let uploadImgURI = `/planUploadImg/${plan.owner_id}/${plan.img_name}`;
     showPlan.querySelector('img.plan_img').src = uploadImgURI;
 
     showPlan.querySelectorAll('input').forEach(input => input.dataset.no = plan.no);
-
 
     showPlan.style.display = "block";
 
@@ -463,8 +455,6 @@ function hideDetailPlanView() {
     document.querySelector('#show_plan input[name="p_file"]').value = '';
 
     const showPlan = document.querySelector('#show_plan');
-
     showPlan.style.display = "none";
-
 
 }
