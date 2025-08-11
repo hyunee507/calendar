@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("calendar.image.upload.resource.locations")
+    @Value("${calendar.image.upload.resource.locations}")
     private String calendarImageUploadResourceLocations;
 
     @Override
